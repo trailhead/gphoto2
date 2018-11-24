@@ -1,6 +1,6 @@
 /* gp-params.h
  *
- * Copyright © 2002 Lutz Müller <lutz@users.sourceforge.net>
+ * Copyright ï¿½ 2002 Lutz Mï¿½ller <lutz@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,6 +37,7 @@ typedef enum {
 	FLAGS_KEEP 		= 1 << 8,
 	FLAGS_KEEP_RAW 		= 1 << 9,
 	FLAGS_SKIP_EXISTING	= 1 << 10,
+	FLAGS_PRIME_FILESYSTEM	= 1 << 11,
 } Flags;
 
 typedef enum {

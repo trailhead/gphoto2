@@ -185,7 +185,16 @@ list_folders_action (GPParams *p)
 	int count;
 	const char *name;
 	int i;
+	static int primed = 0;
 	
+	if (p->flags & FLAGS_PRIME_FILESYSTEM && primed == 0) {
+		if (!(p->flags & FLAGS_QUIET)) { /* do not print that in quiet mode */
+			printf("Priming filesystem from camera\n");
+		}
+		gp_camera_prime_filesystem_cache (p->camera, p->context);
+		primed = 1;
+	}
+
 	CR (gp_list_new (&list));
 
 	CL (gp_camera_folder_list_folders (p->camera, p->folder, list,
@@ -209,6 +218,7 @@ list_folders_action (GPParams *p)
 			printf (" - %s\n", name);
 	}
 	gp_list_free (list);
+
 	return (GP_OK);
 }
 
@@ -219,6 +229,15 @@ list_files_action (GPParams *p)
 	int count, filecount;
 	const char *name;
 	int i;
+	static int primed = FALSE;
+
+	if (p->flags & FLAGS_PRIME_FILESYSTEM && primed == FALSE) {
+		if (!(p->flags & FLAGS_QUIET)) { /* do not print that in quiet mode */
+			printf("Priming filesystem from camera\n");
+		}
+		gp_camera_prime_filesystem_cache (p->camera, p->context);
+		primed = TRUE;
+	}
 
 	CR (gp_list_new (&list));
 	CL (gp_camera_folder_list_files (p->camera, p->folder, list,

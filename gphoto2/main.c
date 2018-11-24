@@ -1338,6 +1338,7 @@ typedef enum {
 	ARG_NO_RECURSE,
 	ARG_NUM_FILES,
 	ARG_PORT,
+	ARG_PRIME_FILESYSTEM,
 	ARG_QUIET,
 	ARG_RECURSE,
 	ARG_RESET,
@@ -1475,6 +1476,10 @@ cb_arg_init (poptContext __unused__ ctx,
 		break;
 	case ARG_NO_KEEP:
 		gp_params.flags &= ~FLAGS_KEEP;
+		break;
+
+	case ARG_PRIME_FILESYSTEM:
+		gp_params.flags |= FLAGS_PRIME_FILESYSTEM;
 		break;
 
 	case ARG_NO_RECURSE:
@@ -2090,6 +2095,8 @@ main (int argc, char **argv, char **envp)
 		 N_("Get files given in range"), N_("RANGE")},
 		{"get-all-files", 'P', POPT_ARG_NONE, NULL, ARG_GET_ALL_FILES,
 		 N_("Get all files from folder"), NULL},
+		{"prime-filesystem", '\0', POPT_ARG_NONE, NULL, ARG_PRIME_FILESYSTEM,
+		 N_("Prime filesystem from camera before performing list operations"), NULL},
 		{"get-thumbnail", 't', POPT_ARG_STRING, NULL, ARG_GET_THUMBNAIL,
 		 N_("Get thumbnails given in range"), N_("RANGE")},
 		{"get-all-thumbnails", 'T', POPT_ARG_NONE, 0,
