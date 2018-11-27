@@ -1,6 +1,6 @@
 /* shell.c:
  *
- * Copyright © 2002 Lutz Müller <lutz@users.sourceforge.net>
+ * Copyright ï¿½ 2002 Lutz Mï¿½ller <lutz@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -101,6 +101,8 @@ static int shell_capture_image_and_download (Camera *, const char *);
 static int shell_capture_preview (Camera *, const char *);
 static int shell_mkdir         (Camera *, const char *);
 static int shell_rmdir         (Camera *, const char *);
+static int shell_event_no_cache         (Camera *, const char *);
+static int shell_event_default_cache    (Camera *, const char *);
 static int shell_wait_event    (Camera *, const char *);
 static int shell_summary       (Camera *, const char *);
 static int shell_storage_info  (Camera *, const char *);
@@ -156,6 +158,9 @@ static const struct _ShellFunctionTable {
 	{"capture-image", shell_capture_image, N_("Capture a single image"), NULL, 0},
 	{"capture-image-and-download", shell_capture_image_and_download, N_("Capture a single image and download it"), NULL, 0},
 	{"capture-preview", shell_capture_preview, N_("Capture a preview image"), NULL, 0},
+	{"event-no-cache", shell_event_no_cache, N_("Set wait_for_event cache mode to none"), NULL, 0},
+	{"event-default-cache", shell_event_default_cache, N_("Set wait_for_event cache mode to default"), NULL, 0},
+	{"quit", shell_exit, N_("Exit the gPhoto shell"), NULL, 0},
 	{"wait-event", shell_wait_event, N_("Wait for an event"), N_("count or seconds"), 0},
 	{"capture-tethered", shell_capture_tethered, N_("Wait for images to be captured and download it"), N_("count or seconds"), 0},
 	{"wait-event-and-download", shell_capture_tethered, N_("Wait for events and images to be captured and download it"), N_("count or seconds"), 0},
@@ -934,6 +939,22 @@ shell_capture_image_and_download (Camera __unused__ *camera, const char __unused
 static int
 shell_capture_preview (Camera __unused__ *camera, const char __unused__ *args) {
 	return action_camera_capture_preview (p);
+}
+
+
+static int
+shell_event_no_cache (Camera __unused__ *camera, const char __unused__ *arg) {
+	gp_camera_wait_for_event_no_cache();
+
+	return (GP_OK);
+}
+
+
+static int
+shell_event_default_cache (Camera __unused__ *camera, const char __unused__ *arg) {
+	gp_camera_wait_for_event_default_cache();
+
+	return (GP_OK);
 }
 
 
